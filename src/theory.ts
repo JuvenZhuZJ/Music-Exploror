@@ -372,7 +372,7 @@ export function getStandardChordName(midis: number[], chordRootMidi: number): { 
   return { base, ext };
 }
 
-export function getVoicingLabel(midis: number[], chordRootMidi: number, chordIntervals: number[]): string {
+export function getVoicingLabel(midis: number[], chordRootMidi: number, _chordIntervals: number[]): string {
   if (!midis || midis.length === 0) return "";
   
   const sorted = [...midis].sort((a, b) => a - b);

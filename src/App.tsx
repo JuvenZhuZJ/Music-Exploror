@@ -75,7 +75,7 @@ export const PASSING_CATEGORIES: Record<string, { name: string, calc: (tq: strin
     { name: 'Half-Dim (iiø7)', calc: () => ({ delta: 2, q: 'm7b5' }) },
     { name: 'Mario Cadence (bVImaj7)', calc: () => ({ delta: 8, q: 'maj7' }) },
     { name: 'Backdoor (bVIImaj7)', calc: () => ({ delta: 10, q: 'maj7' }) },
-    { name: 'Rel. ii7 (V of V)', calc: (tq, bq) => {
+    { name: 'Rel. ii7 (V of V)', calc: (_tq, bq) => {
       const isMinorTarget = bq && ( (bq.startsWith('m') && !bq.startsWith('maj')) || bq.includes('dim') || bq.includes('ø') );
       return { delta: 7, q: isMinorTarget ? 'm7b5' : 'm7' };
     } },
@@ -779,11 +779,8 @@ const applyCascade = (steps: Step[]) => {
 
     const baseMidi = 60; 
     const chordRoot = baseMidi + step.rootIndex + step.pitchClass + (step.octaveShift || 0) * 12;
-    const basePitchClasses = (CHORD_INTERVALS[lookupQuality] || []).map(i => (chordRoot + i) % 12);
     
     const playedMidis = getPlayedMidis(step);
-    const playedPitchClasses = Array.from(new Set(playedMidis.map(m => m % 12)));
-    const extensionPitchClasses = playedPitchClasses.filter(pc => !basePitchClasses.includes(pc));
 
     const activeModeName = step.selectedMode || borrowedFrom[0]?.name;
     const modeSpellings = activeModeName ? getModeSpellings(activeModeName) : {};
@@ -993,7 +990,7 @@ const applyCascade = (steps: Step[]) => {
                   className={selectClass}
                 >
                   {[3, 4, 5, 6].map(o => <option key={o} value={o}>Oct {o}</option>)}
-                  {displayOctave === "Custom" && <option value="Custom">Custom</option>}
+                  {String(displayOctave) === "Custom" && <option value="Custom">Custom</option>}
                 </select>
 
                 <button
@@ -1162,7 +1159,6 @@ const applyCascade = (steps: Step[]) => {
                  let newQuality = step.quality;
                  let newExtType = step.extensionType;
                  
-                 const rootPC = chordRoot % 12;
                  const sortedPCs = Array.from(new Set(newMidis.map(m => (m - chordRoot + 120) % 12))).sort((a,b) => a-b);
                  
                  const TRIAD_QUALITIES = ['maj', 'm', 'dim', 'aug'];
