@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>modal-interchange-website</title>
+    <script src="/WebAudioFontPlayer.js"></script>
+    <script src="/0000_JCLive_sf2_file.js"></script>
+    <script src="/0071_GeneralUserGS_sf2_file.js"></script>
+    <script src="/0110_GeneralUserGS_sf2_file.js"></script>
+    <script src="/0160_FluidR3_GM_sf2_file.js"></script>
+    <script src="/0240_Aspirin_sf2_file.js"></script>
+    <script src="/0480_Chaos_sf2_file.js"></script>
+  </head>
+  <body>
+    <div id="error-log" style="position:fixed; z-index:9999; background:red; color:white; font-size: 20px;"></div>
+    <script>
+      window.onerror = function(message, source, lineno, colno, error) {
+        document.getElementById('error-log').innerHTML += message + '<br>';
+      };
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
